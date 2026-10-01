@@ -5,7 +5,7 @@ Personal Claude Code plugin marketplace.
 Install:
 
 ```
-/plugin marketplace add <github-user>/claude-skills
+/plugin marketplace add ISmiiukha/claude-skills
 /plugin install plan-approval@my-skills
 ```
 
