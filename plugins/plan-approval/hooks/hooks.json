@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.skill // empty' | grep -qE '(^|:)(executing-plans|subagent-driven-development)$' && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"Plan implementation requires your approval\"}}' || true"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/gate-execution.sh\""
           }
         ]
       }

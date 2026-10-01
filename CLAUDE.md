@@ -15,14 +15,22 @@ plugins/<plugin>/
 
 ## Plugins
 
-- **plan-approval** — human approval gate between a superpowers plan and its implementation.
-  - `approve-plan` skill: adds `**Status:** Draft` to the plan, summarizes it, waits for an
-    explicit "yes", then sets `**Status:** Approved (YYYY-MM-DD)` and commits the plan file
-    (`chore: add <feature> implementation plan`).
-  - Hook: forces a permission prompt before `superpowers:executing-plans` or
-    `superpowers:subagent-driven-development` starts.
-  - Works with the global commit gate in `~/.claude/hooks/commit-gate.sh` (not part of this
-    repo), which lets a plan-only commit through without a prompt.
+- **plan-approval** — human approval gate between a superpowers plan and its implementation,
+  plus two execution flows.
+  - `approve-plan`: adds `**Status:** Draft` + `**Mode:** easy|complex` (recommended) to the
+    plan, summarizes it, waits for an explicit "yes" (optionally switching mode), then sets
+    `Approved (YYYY-MM-DD)`, commits the plan, sets `git config claude.planRun "<plan>|<epoch>"`
+    and invokes the mode's flow.
+  - `easy-flow`: runs `superpowers:subagent-driven-development` with no checkpoints; Claude
+    rules on everything and reports rulings at the end. Upgrades to complex if work grows.
+  - `complex-flow`: same, but stops before each task (brief), after each task review
+    (human picks which findings to fix) and on the final branch review.
+  - Both flows: type check before the last commit, set `**Status:** Done`, unset
+    `claude.planRun`.
+  - `hooks/gate-execution.sh`: permission prompt before `superpowers:executing-plans` /
+    `subagent-driven-development`, unless `claude.planRun` is set and < 12h old.
+  - Works with the global commit gate `~/.claude/hooks/commit-gate.sh` (not in this repo): it
+    lets plan-only commits through, and all commits while `claude.planRun` is active.
 
 ## Install / update
 
