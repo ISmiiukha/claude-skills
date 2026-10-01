@@ -1,0 +1,5 @@
+{
+  "name": "plan-approval",
+  "version": "0.1.0",
+  "description": "Human approval gate between a superpowers plan and its implementation"
+}

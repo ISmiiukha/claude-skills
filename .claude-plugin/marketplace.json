@@ -1,0 +1,12 @@
+{
+  "name": "my-skills",
+  "owner": { "name": "Tatyana Smiyukha" },
+  "metadata": { "description": "Personal Claude Code skills and hooks" },
+  "plugins": [
+    {
+      "name": "plan-approval",
+      "source": "./plugins/plan-approval",
+      "description": "Human approval gate between a superpowers plan and its implementation"
+    }
+  ]
+}
